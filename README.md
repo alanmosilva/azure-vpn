@@ -189,7 +189,6 @@ alcançar um host da rede `192.168.0.0/16` da empresa, e vice-versa).
 
 ## Notas / dívidas técnicas
 
-- **Provider `azurerm ~> 4.0`**: a VNet/subnets usam recursos nativos (o módulo `Azure/network` foi removido por travar em `< 4.0.0`). O provider 4.x exige a subscription explícita — defina `export ARM_SUBSCRIPTION_ID="<id>"` antes do `plan`/`apply` (`az account show --query id -o tsv`).
 - **Ambiente de experimento**: o `prevent_destroy` do gateway está **desativado** (comentado em `vpn.tf`) para permitir `destroy`/`recreate` livre. **Reativar antes de virar produção de verdade.**
 - **SKU AZ obrigatório**: SKUs non-AZ (`VpnGw1`) não podem mais ser criados desde 01/nov/2025 — por isso usamos `VpnGw1AZ`.
 - **Secrets**: `terraform.tfvars`, state e `*.tfplan` estão no `.gitignore`.
