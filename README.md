@@ -20,7 +20,7 @@ Deploy de produção que provisiona uma VNet na Azure e um túnel **Site-to-Site
 </p>
 
 <p align="center">
-  <img src="docs/arquitetura.png" alt="Diagrama de arquitetura" width="900" />
+  <img src="docs/arquitetura-generic.png" alt="Diagrama de arquitetura" width="900" />
 </p>
 
 <details>
