@@ -1,0 +1,20 @@
+# Copie para terraform.tfvars e preencha. NÃO commitar terraform.tfvars (contém segredos).
+# Alternativa para segredos: export TF_VAR_vpn_shared_key="..." / TF_VAR_vm_admin_password="..."
+#
+# ATENÇÃO: este arquivo .example É commitado — NUNCA coloque segredos reais aqui.
+
+location = "Brazil South"
+
+# IP público do firewall/roteador VPN da empresa (WAN do SonicWall)
+onprem_gateway_address = "SEU.IP.PUBLICO.AQUI"
+
+# Ranges internos da empresa que devem ser alcançáveis pelo túnel.
+# NÃO podem sobrepor 10.100.0.0/16 (a VNet Azure).
+onprem_address_spaces = ["192.168.0.0/16"]
+
+# Pre-Shared Key do túnel IPsec — combinar com o time de rede da empresa.
+# Gere com: openssl rand -hex 24   (hex evita / + = que o SonicWall às vezes rejeita)
+vpn_shared_key = "GERAR-UMA-CHAVE-FORTE"
+
+# Senha do admin da VM. Min 12 chars, 3 de 4 categorias (maiúscula/minúscula/número/símbolo).
+vm_admin_password = "DEFINIR-SENHA-FORTE"

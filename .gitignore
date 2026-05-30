@@ -1,0 +1,13 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Contém a PSK e dados sensíveis — nunca commitar
+terraform.tfvars
+*.auto.tfvars
+
+# Plan binário pode conter segredos
+plan.out
+*.tfplan

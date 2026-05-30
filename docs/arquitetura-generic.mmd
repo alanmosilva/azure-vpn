@@ -1,0 +1,30 @@
+flowchart LR
+    subgraph EMPRESA["🏢 Empresa — on-prem"]
+        direction TB
+        SW["🛡️ SonicWall TZ 370<br/>SonicOS 7.3.1<br/>WAN pública<br/>LAN 192.168.0.0/16"]
+        ADMIN["💻 Admin<br/>RDP via internet"]
+    end
+    subgraph AZURE["☁️ Azure · Brazil South · rg-vnet-prod"]
+        direction TB
+        GW["🔐 VPN Gateway<br/>VpnGw1AZ + Public IP<br/>zone-redundant"]
+        subgraph VNET["VNet vnet-prod · 10.100.0.0/16"]
+            direction TB
+            GWSUB["GatewaySubnet<br/>10.100.255.0/27"]
+            SNET1["snet1 · 10.100.1.0/24<br/>🖥️ VM Windows de teste"]
+            SNET2["snet2 · 10.100.2.0/24"]
+            NSG(["NSG nsg-prod<br/>RDP · SSH · ICMP da empresa<br/>deny no resto"])
+        end
+    end
+    TF["⚙️ Terraform<br/>azurerm 4.x"]
+    SW <==>|"IPsec IKEv2<br/>AES256 · SHA256 · DH14"| GW
+    GW --- GWSUB
+    ADMIN -.->|"RDP via internet"| SNET1
+    NSG -.->|protege| SNET1
+    NSG -.->|protege| SNET2
+    TF ==>|"terraform apply"| AZURE
+    classDef azure fill:#0078D4,color:#fff,stroke:#005a9e;
+    classDef tf fill:#7B42BC,color:#fff,stroke:#5c2d91;
+    classDef sw fill:#FF8200,color:#fff,stroke:#cc6800;
+    class GW,GWSUB,SNET1,SNET2,NSG azure;
+    class TF tf;
+    class SW sw;
